@@ -1,0 +1,12 @@
+# skeleton/entraid-group.yaml
+apiVersion: groups.azuread.upbound.io/v1beta1
+kind: Group
+metadata:
+  name: "testgroup-from-backstage5"
+spec:
+  forProvider:
+    displayName: "testgroup-from-backstage5"
+    mailEnabled: false
+    securityEnabled: true
+  providerConfigRef:
+    name: azuread-default

@@ -1,0 +1,12 @@
+# crossplane/identity/providerconfig-azuread.yaml
+apiVersion: azuread.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: azuread-default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: azuread-creds
+      key: creds

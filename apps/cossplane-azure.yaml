@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-azure
+spec:
+  destination:
+    namespace: crossplane-system
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/njalv/argo-cd-test.git
+    targetRevision: main
+    path: crossplane
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
