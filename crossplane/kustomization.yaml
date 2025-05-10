@@ -7,3 +7,4 @@ resources:
   - infra/provider-azure.yaml
   - infra/providerconfig-azure.yaml
   - entraid-groups/*.yaml
+  - entraid-groups/dummy.yaml
