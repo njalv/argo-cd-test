@@ -6,4 +6,4 @@ resources:
   - infra/provider-azuread.yaml
   - infra/provider-azure.yaml
   - infra/providerconfig-azure.yaml
-  - entraid-groups/entraid-group.yaml
+  - entraid-groups/*.yaml
