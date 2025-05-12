@@ -33,9 +33,12 @@ spec:
             mergeOptions:
               appendSlice: true
               keepMapValues: true
-        - type: HardcodedValue
+        - type: CombineFromComposite
+          combine:
+            strategy: string
+            string:
+              fmt: "providerconfig-azure"
           toFieldPath: spec.providerConfigRef.name
-          value: providerconfig-azure
   patchSets:
     - name: common-tags-and-platform
       patches:
