@@ -35,6 +35,7 @@ spec:
               keepMapValues: true
         - type: CombineFromComposite
           combine:
+            variables: []
             strategy: string
             string:
               fmt: "providerconfig-azure"
