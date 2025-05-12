@@ -35,7 +35,8 @@ spec:
               keepMapValues: true
         - type: CombineFromComposite
           combine:
-            variables: []
+            variables:
+              - fromFieldPath: metadata.uid
             strategy: string
             string:
               fmt: "azure-providerconfig"
