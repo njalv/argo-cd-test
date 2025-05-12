@@ -2,8 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - apps/crossplane-root-app.yaml
+  - apps/crossplane-claims-appset
   - infra/providerconfig-azuread.yaml
   - infra/provider-azuread.yaml
   - infra/provider-azure.yaml
   - infra/providerconfig-azure.yaml
   - entraid-groups/entraid-group.yaml
+  - platform-apis/xrd-resourcegroup.yaml
+  - platform-apis/composition-resourcegroup-azure.yaml

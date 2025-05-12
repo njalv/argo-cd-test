@@ -1,0 +1,35 @@
+# crossplane/apps/crossplane-claims-appset.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: crossplane-claims
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/njalv/argo-cd-test.git
+        revision: main
+        directories:
+          - path: crossplane/claims/*
+  template:
+    metadata:
+      name: "claim-{{path.basename}}"
+      labels:
+        appset-generated-for: "{{path.basename}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/njalv/argo-cd-test.git
+        targetRevision: main
+        path: "{{path}}"
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: crossplane-system
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true

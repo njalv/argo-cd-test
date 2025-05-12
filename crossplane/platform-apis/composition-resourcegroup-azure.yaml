@@ -1,0 +1,53 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: resourcegroup.azure.platform
+  labels:
+    provider: azure
+    type: resourcegroup
+    platformAPI: platform.localhost
+spec:
+  compositeTypeRef:
+    apiVersion: platform.localhost/v1alpha1
+    kind: XResourceGroup
+
+  resources:
+    - name: composedAzureResourceGroup
+      base:
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        spec:
+          forProvider: {}
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.location
+          toFieldPath: spec.forProvider.location
+
+        - type: FromCompositeFieldPath
+          fromFieldPath: metadata.name
+          toFieldPath: metadata.name
+        - type: PatchSet
+          patchSetName: common-tags-and-platform
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.commonTags
+          policy:
+            mergeOptions:
+              appendSlice: true
+              keepMapValues: true
+        - type: FromEnvironmentFieldPath
+          fromFieldPath: providerConfigRef.name
+          toFieldPath: spec.providerConfigRef.name
+  patchSets:
+    - name: common-tags-and-platform
+      patches:
+        - type: ToCompositeFieldPath
+          fromFieldPath: spec.forProvider.tags
+          toFieldPath: spec.forProvider.tags
+          transforms:
+            - type: map
+              map:
+                managed-by: crossplane-platform
+          policy:
+            mergeOptions:
+              appendSlice: true
+              keepMapValues: false
