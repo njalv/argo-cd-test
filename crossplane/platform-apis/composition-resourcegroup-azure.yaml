@@ -16,7 +16,9 @@ spec:
         apiVersion: azure.upbound.io/v1beta1
         kind: ResourceGroup
         spec:
-          forProvider: {}
+          forProvider:
+            tags:
+              managed-by: "crossplane-platform"
       patches:
         - type: FromCompositeFieldPath
           fromFieldPath: spec.location
@@ -24,14 +26,11 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: metadata.name
           toFieldPath: metadata.name
-        - type: PatchSet
-          patchSetName: common-tags-and-platform
         - type: FromCompositeFieldPath
           fromFieldPath: spec.commonTags
           toFieldPath: spec.forProvider.tags
           policy:
             mergeOptions:
-              appendSlice: true
               keepMapValues: true
         - type: CombineFromComposite
           combine:
@@ -41,17 +40,3 @@ spec:
             string:
               fmt: "azure-providerconfig"
           toFieldPath: spec.providerConfigRef.name
-  patchSets:
-    - name: common-tags-and-platform
-      patches:
-        - type: ToCompositeFieldPath
-          fromFieldPath: spec.forProvider.tags
-          toFieldPath: spec.forProvider.tags
-          transforms:
-            - type: map
-              map:
-                managed-by: crossplane-platform
-          policy:
-            mergeOptions:
-              appendSlice: true
-              keepMapValues: false
