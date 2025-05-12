@@ -38,7 +38,7 @@ spec:
             variables: []
             strategy: string
             string:
-              fmt: "providerconfig-azure"
+              fmt: "azure-providerconfig"
           toFieldPath: spec.providerConfigRef.name
   patchSets:
     - name: common-tags-and-platform
