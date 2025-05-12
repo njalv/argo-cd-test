@@ -1,0 +1,11 @@
+# Your test claim: crossplane/claims/test-rg-claim.yaml
+apiVersion: platform.localhost/v1alpha1
+kind: ResourceGroupClaim
+metadata:
+  name: my-first-platform-rg
+  namespace: default
+spec:
+  location: "WestEurope"
+  commonTags:
+    project: "PlatformTest"
+    environment: "testing"
