@@ -10,7 +10,6 @@ spec:
   compositeTypeRef:
     apiVersion: platform.localhost/v1alpha1
     kind: XResourceGroup
-
   resources:
     - name: composedAzureResourceGroup
       base:
@@ -22,7 +21,6 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: spec.location
           toFieldPath: spec.forProvider.location
-
         - type: FromCompositeFieldPath
           fromFieldPath: metadata.name
           toFieldPath: metadata.name
@@ -30,13 +28,14 @@ spec:
           patchSetName: common-tags-and-platform
         - type: FromCompositeFieldPath
           fromFieldPath: spec.commonTags
+          toFieldPath: spec.forProvider.tags
           policy:
             mergeOptions:
               appendSlice: true
               keepMapValues: true
-        - type: FromEnvironmentFieldPath
-          fromFieldPath: providerConfigRef.name
+        - type: HardcodedValue
           toFieldPath: spec.providerConfigRef.name
+          value: providerconfig-azure
   patchSets:
     - name: common-tags-and-platform
       patches:
